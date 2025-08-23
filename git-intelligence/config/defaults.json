@@ -1,0 +1,31 @@
+{
+  "commit": {
+    "conventional": true,
+    "types": ["feat", "fix", "docs", "style", "refactor", "test", "chore"],
+    "scope_required": false,
+    "body_required": false,
+    "breaking_change_prefix": "BREAKING CHANGE:"
+  },
+  "branch": {
+    "prefix_separator": "/",
+    "lowercase": true,
+    "max_length": 50,
+    "protected": ["main", "master", "develop", "staging", "production"]
+  },
+  "suggestions": {
+    "auto_stage": false,
+    "show_diff": true,
+    "max_diff_lines": 50,
+    "timeout_seconds": 30
+  },
+  "ui": {
+    "color_scheme": "default",
+    "show_emoji": true,
+    "compact_mode": false
+  },
+  "learning": {
+    "enabled": true,
+    "min_samples": 10,
+    "confidence_threshold": 0.7
+  }
+}

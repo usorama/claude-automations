@@ -1,0 +1,43 @@
+{
+  "work_patterns": {
+    "feature": {
+      "indicators": ["add", "implement", "create", "new"],
+      "file_patterns": ["src/", "components/", "features/"],
+      "commit_prefix": "feat"
+    },
+    "bugfix": {
+      "indicators": ["fix", "resolve", "repair", "correct"],
+      "file_patterns": ["src/", "lib/"],
+      "commit_prefix": "fix"
+    },
+    "documentation": {
+      "indicators": ["update", "document", "readme"],
+      "file_patterns": ["*.md", "docs/", "*.rst"],
+      "commit_prefix": "docs"
+    },
+    "testing": {
+      "indicators": ["test", "spec", "coverage"],
+      "file_patterns": ["test/", "tests/", "*.test.*", "*.spec.*"],
+      "commit_prefix": "test"
+    },
+    "refactoring": {
+      "indicators": ["refactor", "optimize", "simplify", "clean"],
+      "file_patterns": ["src/", "lib/"],
+      "commit_prefix": "refactor"
+    },
+    "configuration": {
+      "indicators": ["config", "setup", "settings"],
+      "file_patterns": ["*.json", "*.yaml", "*.toml", ".env"],
+      "commit_prefix": "chore"
+    }
+  },
+  "file_categories": {
+    "source": ["*.py", "*.js", "*.ts", "*.jsx", "*.tsx", "*.java", "*.go"],
+    "test": ["*.test.*", "*.spec.*", "test_*.py"],
+    "config": ["*.json", "*.yaml", "*.yml", "*.toml", "*.ini"],
+    "documentation": ["*.md", "*.rst", "*.txt", "README*"],
+    "style": ["*.css", "*.scss", "*.less"],
+    "asset": ["*.png", "*.jpg", "*.svg", "*.gif"],
+    "data": ["*.csv", "*.sql", "*.db"]
+  }
+}
