@@ -269,21 +269,21 @@ def main():
     - args: (for pre_tool_use only) JSON string of tool arguments
     """
     if len(sys.argv) < 2:
-        print("❌ Usage: silent-failure-detector-hook.py <hook_type> [tool_name] [args]")
-        sys.exit(1)
+        # Silent exit - Claude Code might call with no args
+        sys.exit(0)
     
     hook_type = sys.argv[1]
     
     if hook_type == 'pre_tool_use':
         if len(sys.argv) < 4:
-            print("❌ Usage: silent-failure-detector-hook.py pre_tool_use <tool_name> <args_json>")
-            sys.exit(1)
+            # Silent exit - missing args means we can't check
+            sys.exit(0)
         
         tool_name = sys.argv[2]
         try:
-            args = json.loads(sys.argv[3])
-        except json.JSONDecodeError:
-            args = sys.argv[3]  # Fallback to string
+            args = json.loads(sys.argv[3]) if sys.argv[3] else {}
+        except (json.JSONDecodeError, IndexError):
+            args = {}  # Safe fallback
         
         success = handle_pre_tool_use(tool_name, args)
         sys.exit(0 if success else 1)
