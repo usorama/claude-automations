@@ -1,0 +1,348 @@
+# PROJECT_CONFIG.yaml - Master Configuration for AI-Assisted Development
+
+# Project Metadata
+project:
+  name: "${PROJECT_NAME}"
+  version: "1.0.0"
+  description: "${PROJECT_DESCRIPTION}"
+  start_date: "${START_DATE}"
+  target_completion: "${TARGET_DATE}"
+  development_cycle: "7-day"
+  
+# Team Configuration  
+team:
+  size: 1
+  lead: "${TEAM_LEAD}"
+  members: []
+  expertise_level: "intermediate"  # beginner | intermediate | expert
+  
+# Framework Activation Phases
+# Recommended order for new AI products
+phases:
+  # Phase 0: Discovery & Definition (Days 0-1)
+  discovery:
+    order: 0
+    duration: "1-2 days"
+    frameworks:
+      - name: "business-discovery"
+        command: "/0.1discover"
+        status: "pending"  # pending | active | completed
+        started: null
+        completed: null
+        artifacts: ["Project Brief"]
+        
+      - name: "solution-definition"
+        command: "/0.2define"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: ["Product Requirements Document (PRD)"]
+        
+      - name: "validation-feasibility"
+        command: "/0.3validate"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: ["Validation Summary", "Risk Register", "Success Metrics Framework"]
+        
+  # Phase 1: Planning (Days 1-2)
+  planning:
+    order: 1
+    duration: "2 days"
+    frameworks:
+      - name: "architecture"
+        command: "/1.1arch"
+        status: "pending"  # pending | active | completed
+        started: null
+        completed: null
+        artifacts: ["System Architecture Document", "Technology Stack Documentation"]
+        
+      - name: "ux-research"
+        command: "/1.2ux"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: ["User Research Findings", "Design System"]
+        
+      - name: "security"
+        command: "/1.3security"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: ["Security Blueprint", "Compliance Matrix"]
+  
+  # Phase 2: Development (Days 2-4)
+  development:
+    order: 2
+    duration: "2 days"
+    frameworks:
+      - name: "features"
+        command: "/2.1feature"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+        
+      - name: "api-development"
+        command: "/2.2api"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+        
+      - name: "database"
+        command: "/2.3db"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+        
+      - name: "ml-development"
+        command: "/2.4ml"
+        status: "pending"
+        optional: true
+        started: null
+        completed: null
+        artifacts: []
+  
+  # Phase 3: Quality (Day 5)
+  quality:
+    order: 3
+    duration: "1 day"
+    frameworks:
+      - name: "code-quality"
+        command: "/3.1review"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+        
+      - name: "testing"
+        command: "/3.2test"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+        
+      - name: "documentation"
+        command: "/3.3docs"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+  
+  # Phase 4: Deployment (Day 6)
+  deployment:
+    order: 4
+    duration: "1 day"
+    frameworks:
+      - name: "deployment"
+        command: "/4.1deploy"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+        
+      - name: "monitoring"
+        command: "/4.2monitor"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+        
+      - name: "performance"
+        command: "/4.3perf"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+  
+  # Phase 5: Operations (Ongoing)
+  operations:
+    order: 5
+    duration: "ongoing"
+    frameworks:
+      - name: "incident-response"
+        command: "/5.1incident"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+        
+      - name: "integrations"
+        command: "/5.2integrate"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+        
+      - name: "data-pipeline"
+        command: "/5.3data"
+        status: "pending"
+        started: null
+        completed: null
+        artifacts: []
+
+# Project Requirements
+requirements:
+  functional:
+    - requirement: "Example functional requirement"
+      priority: "high"  # high | medium | low
+      status: "pending"
+      
+  non_functional:
+    performance:
+      response_time: "<200ms"
+      throughput: "10K req/s"
+      concurrent_users: "100K"
+    
+    security:
+      authentication: "OAuth2"
+      encryption: "TLS 1.3"
+      compliance: ["GDPR", "SOC2"]
+    
+    scalability:
+      horizontal: true
+      auto_scaling: true
+      multi_region: false
+
+# Technology Stack
+tech_stack:
+  frontend:
+    framework: null  # React | Vue | Angular | Next.js
+    state_management: null
+    styling: null
+    
+  backend:
+    language: null  # Node.js | Python | Go | Java
+    framework: null
+    orm: null
+    
+  database:
+    primary: null  # PostgreSQL | MySQL | MongoDB
+    cache: null  # Redis | Memcached
+    search: null  # Elasticsearch | Algolia
+    
+  infrastructure:
+    cloud: null  # AWS | GCP | Azure
+    container: "Docker"
+    orchestration: null  # Kubernetes | ECS | Cloud Run
+    ci_cd: "GitHub Actions"
+    
+  monitoring:
+    apm: null  # Datadog | New Relic | AppDynamics
+    logging: null  # ELK | Splunk | CloudWatch
+    metrics: null  # Prometheus | Grafana
+
+# Risk Management
+risks:
+  - risk: "Example technical risk"
+    probability: "medium"  # low | medium | high
+    impact: "high"  # low | medium | high
+    mitigation: "Mitigation strategy"
+    owner: null
+
+# Success Metrics
+metrics:
+  business:
+    - metric: "User acquisition"
+      target: "10K users in 3 months"
+      current: null
+      
+    - metric: "Revenue"
+      target: "$100K MRR"
+      current: null
+      
+  technical:
+    - metric: "Deployment frequency"
+      target: "Daily"
+      current: null
+      
+    - metric: "Lead time"
+      target: "<1 day"
+      current: null
+      
+    - metric: "MTTR"
+      target: "<1 hour"
+      current: null
+      
+    - metric: "Change failure rate"
+      target: "<5%"
+      current: null
+
+# Framework Dependencies
+dependencies:
+  business-discovery:
+    depends_on: []
+    enables: ["solution-definition"]
+    
+  solution-definition:
+    depends_on: ["business-discovery"]
+    enables: ["validation-feasibility"]
+    
+  validation-feasibility:
+    depends_on: ["business-discovery", "solution-definition"]
+    enables: ["architecture", "ux-research", "security"]
+    
+  architecture:
+    depends_on: ["validation-feasibility"]
+    enables: ["api-development", "database", "features"]
+    
+  security:
+    depends_on: ["validation-feasibility", "architecture"]
+    enables: ["api-development", "deployment"]
+    
+  api-development:
+    depends_on: ["architecture", "security"]
+    enables: ["features", "testing"]
+    
+  database:
+    depends_on: ["architecture"]
+    enables: ["api-development", "data-pipeline"]
+    
+  testing:
+    depends_on: ["features", "api-development"]
+    enables: ["deployment"]
+    
+  deployment:
+    depends_on: ["testing", "documentation"]
+    enables: ["monitoring", "incident-response"]
+    
+  monitoring:
+    depends_on: ["deployment"]
+    enables: ["performance", "incident-response"]
+
+# Custom Configuration
+custom:
+  # Add project-specific configuration here
+  feature_flags:
+    enabled: false
+    provider: null
+    
+  a_b_testing:
+    enabled: false
+    platform: null
+    
+  analytics:
+    enabled: false
+    provider: null
+
+# Completion Tracking
+completion:
+  overall_progress: 0  # Percentage
+  phase_completed: []
+  frameworks_completed: []
+  blockers: []
+  
+# Notes & Documentation
+notes:
+  - date: "${DATE}"
+    note: "Project initialized with AI-assisted development frameworks"
+    author: "System"
+    
+# Version History
+version_history:
+  - version: "1.0.0"
+    date: "${DATE}"
+    changes: "Initial project configuration"
+    author: "${AUTHOR}"
