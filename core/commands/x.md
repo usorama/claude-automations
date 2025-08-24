@@ -11,6 +11,7 @@ If the prompt ends with switches, process them:
 - -o or --optimize: append "optimize for performance"
 - -t or --think: append "think hard"
 - -p or --plan: append "create a detailed plan"
+- --rules: append "MANDATORY: Strictly follow all AI development rules"
 
 Multiple switches can be combined.
 Remove switches and append instructions.

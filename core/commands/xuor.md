@@ -1,37 +1,30 @@
 ---
-description: Execute with ALL switches - ultrathink, research, optimize, plan, and rules
+description: Execute with ultrathink + optimize + rules enforcement
 argument-hint: [task]
 ---
 
-Execute this task with ALL enhancements AND mandatory AI development rules:
+Execute this task with ultrathink, optimization focus, AND mandatory AI development rules:
 $ARGUMENTS
 
-## 🚀 **ALL SWITCHES ACTIVATED**:
+## Combined Directives:
 
 ### 🧠 **ULTRATHINK**
 Think deeply and thoroughly about this problem. Consider multiple perspectives, edge cases, and implications. Take time to analyze all aspects before responding.
 
-### 🔍 **RESEARCH THOROUGHLY**
-Research this topic thoroughly using all available resources. Provide comprehensive, well-sourced information with deep analysis.
-
 ### ⚡ **OPTIMIZE**
 Optimize this solution for maximum performance, efficiency, and adherence to best practices. Consider scalability and maintainability.
 
-### 📋 **DETAILED PLANNING**
-Create a detailed, actionable plan with clear steps, milestones, dependencies, and success criteria. Include risk assessment and contingencies.
-
-### 📚 **MANDATORY RULES ENFORCEMENT**
+### 📋 **MANDATORY RULES ENFORCEMENT**
 STRICTLY follow ALL AI development rules in ~/claude-automations/rules.md:
 
-**ALL Rule Categories MUST be applied:**
 - **Planning & Discovery**: Research existing codebase BEFORE starting
-- **Code Quality & Security**: NIST SP 800-218A compliance
+- **Code Quality & Security**: NIST SP 800-218A compliance  
 - **Workflow & Process**: Review before deploy, test-driven development
 - **Testing & Validation**: Write tests FIRST, comprehensive coverage
 - **Documentation & Compliance**: EU AI Act, audit trails
 - **Dependency & Architecture**: No duplicates, proper dependencies
 - **AI-Specific Development**: Responsible AI, human oversight
 
-**This is MAXIMUM enforcement mode - ALL requirements are NON-NEGOTIABLE.**
+**Performance optimization MUST comply with security and compliance rules.**
 
 Read complete rules: @~/claude-automations/rules.md

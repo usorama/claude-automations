@@ -18,7 +18,8 @@ def process_global_switches():
         "-r": "Research this topic thoroughly using all available resources. Provide comprehensive, well-sourced information with deep analysis.",
         "-o": "Optimize this solution for maximum performance, efficiency, and adherence to best practices. Consider scalability and maintainability.",
         "-t": "Think through this step-by-step with careful reasoning and logical analysis. Break down complex problems into manageable parts.",
-        "-p": "Create a detailed, actionable plan with clear steps, milestones, dependencies, and success criteria. Include risk assessment and contingencies."
+        "-p": "Create a detailed, actionable plan with clear steps, milestones, dependencies, and success criteria. Include risk assessment and contingencies.",
+        "--rules": "MANDATORY: Strictly follow all AI development rules in ~/claude-automations/rules.md. Apply ALL rules: Planning & Discovery (research first), Code Quality & Security (NIST compliance), Workflow & Process (review before deploy), Testing & Validation (test-driven development), Documentation & Compliance (EU AI Act), Dependency & Architecture (no duplicates), and AI-Specific Development (responsible AI). These rules are NON-NEGOTIABLE."
     }
     
     try:

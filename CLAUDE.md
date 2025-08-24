@@ -34,6 +34,27 @@ Last Updated: August 23, 2025
 3. **Portable** - Clone repo + create symlinks = instant setup
 4. **Organized** - Clear separation of concerns
 
+## 🚀 **MANDATORY DEVELOPMENT RULES**
+
+**⚠️ CRITICAL: All development work MUST follow the comprehensive guidelines in [rules.md](./rules.md)**
+
+The rules.md file contains **mandatory** AI development guidelines based on:
+- **NIST AI Risk Management Framework** (2024-2025)
+- **EU AI Act Compliance** requirements
+- **Industry Security Best Practices**
+- **Claude Code Integration Standards**
+
+**Key Rule Categories:**
+- 🔍 **Planning & Discovery** - Research first, plan before coding
+- 🔒 **Code Quality & Security** - NIST compliance, security by design
+- ⚡ **Workflow & Process** - Review before deploy, test-driven development
+- 🧪 **Testing & Validation** - Comprehensive coverage, AI-specific testing
+- 📚 **Documentation & Compliance** - EU AI Act, audit trails
+- 🏗️ **Dependency & Architecture** - Eliminate duplicates, proper dependencies
+- 🤖 **AI-Specific Development** - Responsible AI code generation
+
+**📖 Read [rules.md](./rules.md) before starting any development work.**
+
 ## 🎯 PURPOSE OF CLAUDE-AUTOMATIONS
 
 This is NOT just about git. This is a comprehensive automation ecosystem for:
