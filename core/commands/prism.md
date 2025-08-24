@@ -1,0 +1,1 @@
+/Users/umasankrudhya/claude-automations/prism/../core/commands/prism.md
