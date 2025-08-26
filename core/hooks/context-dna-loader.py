@@ -11,8 +11,8 @@ import sys
 import json
 from pathlib import Path
 
-# Add prism src to path
-sys.path.append(str(Path.home() / 'claude-automations' / 'prism' / 'src'))
+# Add git-intelligence src to path
+sys.path.append(str(Path.home() / 'claude-automations' / 'git-intelligence' / 'src'))
 
 try:
     from context_dna import ContextDNAProfiler

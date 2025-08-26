@@ -1,0 +1,4 @@
+#!/bin/bash
+# PRISM Dashboard wrapper script
+
+python3 ~/claude-automations/prism/src/realtime_dashboard.py "$@"

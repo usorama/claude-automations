@@ -18,6 +18,7 @@ Last Updated: August 23, 2025
 │   ├── agents/                # ← Specialist agents
 │   └── scripts/               # ← Utility scripts
 ├── git-intelligence/          # ← Git automation subsystem
+├── prism/                     # ← PRISM context optimization system
 ├── config/                    # ← Configuration files
 └── docs/                      # ← Documentation
 
@@ -55,9 +56,47 @@ The rules.md file contains **mandatory** AI development guidelines based on:
 
 **📖 Read [rules.md](./rules.md) before starting any development work.**
 
+## 🧠 PRISM - Context Optimization System
+
+**NEW SUBSYSTEM**: PRISM (Proactive Real-time Intelligence System for Manifests) optimizes context delivery for Claude Code agents using LLM-driven selection.
+
+**What PRISM Does**: Instead of loading 200KB+ of manifests (90% irrelevant), PRISM uses Ollama LLM to engineer optimal context specific to each agent's task.
+
+**Learn More**: [prism/CLAUDE.md](./prism/CLAUDE.md) | [PRD](./prism/docs/PRISM_PRD.md) | [Epic](./prism/EPIC_CLAUDE_CODE_INTEGRATION.md)
+
+## 🎯 CLAUDE CODE INTEGRATION - CRITICAL CONTEXT
+
+### What This Project Is:
+**A comprehensive automation ecosystem built SPECIFICALLY FOR Claude Code CLI**
+- Every feature MUST work with Claude Code's actual capabilities
+- All automations MUST integrate with Claude Code's hook system
+- Commands MUST use Claude Code's slash command system
+- Intelligence MUST be accessible to Claude Code agents
+
+### What This Means:
+1. **Research Claude Code FIRST** - Don't assume, verify in `~/.claude-code-docs`
+2. **Test in Claude Code** - Not standalone Python scripts
+3. **Use Real Events** - Not imaginary environment variables
+4. **Hook into Actual System** - Not theoretical implementations
+
+### Integration Points:
+- **Slash Commands**: `/command` files in `~/.claude/commands/`
+- **Event Hooks**: Hooks that fire on REAL Claude Code events
+- **Agent Instructions**: Via CLAUDE.md and rules.md
+- **MCP Servers**: Future integration for tool-based intelligence
+
+### Before Building ANYTHING:
+Ask yourself:
+1. Does this work with Claude Code's actual implementation?
+2. Have I verified this in the Claude Code documentation?
+3. Will this trigger automatically in Claude Code?
+4. Can Claude Code agents actually use this?
+
+If ANY answer is "no" or "I don't know" - STOP AND RESEARCH.
+
 ## 🎯 PURPOSE OF CLAUDE-AUTOMATIONS
 
-This is NOT just about git. This is a comprehensive automation ecosystem for:
+This is NOT just about git. This is a comprehensive automation ecosystem for Claude Code:
 
 ### 1. **Safety Nets** (Automatic, no interaction)
 - Auto-commit every 30 minutes
@@ -180,17 +219,27 @@ If the user has to:
   - Auto-commit hooks (Day 4)
 - **Status**: Active, being enhanced
 
-### 2. BMAD Agents (`core/agents/bmad-*.md`)
+### 2. PRISM (`prism/`)
+- **Purpose**: LLM-driven context optimization for Claude Code agents
+- **Components**:
+  - Context DNA Profiler (agent learning)
+  - Context Router (intent analysis)
+  - MCP Server (in development)
+  - SQLite Intelligence DB (planned)
+- **Status**: 60% complete, MCP integration in progress
+- **Documentation**: See [prism/CLAUDE.md](./prism/CLAUDE.md) for details
+
+### 3. BMAD Agents (`core/agents/bmad-*.md`)
 - **Purpose**: Specialized development agents
 - **Count**: 20+ agents
 - **Usage**: Via Task tool
 
-### 3. Custom Commands (`core/commands/`)
+### 4. Custom Commands (`core/commands/`)
 - **Purpose**: Slash commands for Claude Code
 - **Count**: 92+ commands
 - **Categories**: Planning, development, testing, deployment
 
-### 4. Event Hooks (`core/hooks/`)
+### 5. Event Hooks (`core/hooks/`)
 - **Purpose**: Automatic triggers
 - **Count**: 20+ hooks
 - **Types**: Pre-commit, post-edit, session lifecycle

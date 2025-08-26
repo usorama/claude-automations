@@ -236,6 +236,39 @@ class ContextDNAProfiler:
         
         profile.last_updated = datetime.now().isoformat()
         
+    def get_profile(self, agent_type: str) -> Optional[Dict]:
+        """Get the DNA profile for an agent type"""
+        if agent_type in self.profiles:
+            return self.profiles[agent_type].to_dict()
+        elif agent_type in self.DEFAULT_PROFILES:
+            # Return default profile if no custom one exists
+            return self.DEFAULT_PROFILES[agent_type]
+        return None
+    
+    def update_profile(self, agent_type: str, updates: Dict):
+        """Update a profile with new information"""
+        if agent_type not in self.profiles:
+            # Create profile from defaults if it doesn't exist
+            if agent_type in self.DEFAULT_PROFILES:
+                default = self.DEFAULT_PROFILES[agent_type]
+                self.profiles[agent_type] = ContextDNA(
+                    agent_type=agent_type,
+                    essential_manifests=default.get('essential_manifests', []),
+                    optional_manifests=default.get('optional_manifests', []),
+                    never_manifests=default.get('never_manifests', []),
+                    max_context_kb=default.get('max_context_kb', 25),
+                    task_patterns=default.get('task_patterns', {}),
+                    success_patterns={},
+                    usage_stats={},
+                    last_updated=datetime.now().isoformat()
+                )
+        
+        # Apply updates if profile exists
+        if agent_type in self.profiles:
+            profile = self.profiles[agent_type]
+            profile.last_updated = datetime.now().isoformat()
+            # Can extend this to update specific fields based on learning
+    
     def learn_from_success(self, agent_type: str, context_combination: List[str], success_score: float):
         """Learn from successful context combinations"""
         if agent_type not in self.profiles:

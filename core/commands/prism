@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""
+PRISM Command - Display intelligence dashboard
+"""
+
+import sys
+import subprocess
+from pathlib import Path
+
+def main():
+    """Main command handler"""
+    args = sys.argv[1:] if len(sys.argv) > 1 else []
+    
+    dashboard_path = Path.home() / "claude-automations" / "prism" / "src" / "realtime_dashboard.py"
+    
+    if not dashboard_path.exists():
+        print("❌ PRISM dashboard not found at expected location")
+        print(f"   Expected: {dashboard_path}")
+        return 1
+    
+    if args and args[0] == "clear":
+        # Clear the database
+        import sqlite3
+        db_path = Path.home() / '.claude' / 'prism' / 'intelligence.db'
+        if db_path.exists():
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM tool_usage")
+            cursor.execute("DELETE FROM agent_usage")
+            cursor.execute("DELETE FROM file_patterns")
+            cursor.execute("DELETE FROM search_patterns")
+            cursor.execute("DELETE FROM command_patterns")
+            conn.commit()
+            conn.close()
+            print("✅ PRISM data cleared")
+        else:
+            print("No PRISM data to clear")
+        return 0
+    
+    elif args and args[0] == "help":
+        print("""
+🔮 PRISM Intelligence Dashboard
+
+Usage:
+  /prism          Show the dashboard
+  /prism clear    Clear all collected data
+  /prism help     Show this help
+
+PRISM tracks your Claude Code usage patterns to provide intelligent assistance.
+        """)
+        return 0
+    
+    else:
+        # Run the dashboard
+        result = subprocess.run(
+            ["python3", str(dashboard_path)],
+            capture_output=False
+        )
+        return result.returncode
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,30 +1,31 @@
 # Product Requirements Document: PRISM
 ## Proactive Real-time Intelligence System for Manifests
 
-**Document Version**: 1.0  
-**Date**: August 24, 2025  
+**Document Version**: 2.0  
+**Date**: August 25, 2025  
 **Author**: Claude Code Innovation Team  
-**Status**: READY FOR IMPLEMENTATION
+**Status**: ARCHITECTURE UPDATED - SIPOC MODEL INTEGRATED
 
 ---
 
 ## Executive Summary
 
-**Project Vision**: Transform Claude Code's context management from static, bloated loading to dynamic, intelligent, agent-specific context delivery.
+**Project Vision**: Transform Claude Code's context management from static, bloated loading to dynamic, LLM-engineered, quality-focused context delivery that prioritizes relevance and effectiveness over arbitrary size constraints.
 
 **Business Problem**: Agents currently load 200KB+ of context with 90% going unused, causing performance degradation, context window bloat, and reduced agent effectiveness.
 
-**Proposed Solution**: PRISM - an intelligent context orchestration system that learns what each agent needs, delivers precisely that context, and maintains real-time synchronization with the codebase.
+**Proposed Solution**: PRISM - an intelligent context orchestration system powered by LLM decision-making that engineers optimal context based on agent requests, delivering precisely what's needed while maintaining real-time synchronization with the codebase.
 
 **Success Metrics**: 
-- 90% reduction in context size per agent
-- 5x improvement in agent response times
+- Context relevance score >95% (measured by agent task success)
+- Progressive context optimization (continuous improvement via learning)
 - 100% manifest freshness (always current)
 - Zero manual manifest maintenance
+- Context size reduction as secondary metric (track but don't constrain)
 
 **Investment Required**: 2 days of development leveraging 80% existing infrastructure
 
-**Expected ROI**: Immediate 5x performance improvement, enabling agents to handle 10x more complex tasks within the same context window.
+**Expected ROI**: Dramatically improved agent task success rates through intelligent context engineering, enabling agents to receive exactly the information they need without arbitrary size constraints.
 
 ---
 
@@ -64,10 +65,12 @@ PRISM creates "Context DNA" profiles for each agent type, learning from usage pa
 4. **Zero Maintenance**: Fully automated operation
 
 ### Success Criteria
-- Agents receive <20KB of focused context (vs 200KB+ today)
+- Agents receive intelligently engineered context optimized for their specific task
+- LLM-driven context selection based on task intent and requirements
+- 95%+ context relevance score (quality over quantity)
 - Manifests update within 2 seconds of code changes
-- 95% context relevance score
 - Zero manual intervention required
+- Continuous measurement and improvement of context effectiveness
 
 ---
 
@@ -124,29 +127,92 @@ PRISM creates "Context DNA" profiles for each agent type, learning from usage pa
 
 ### 🔧 **Components to Build (20% remaining)**
 
-#### 1. **Real-time Manifest Updater**
-- File watcher for code changes
-- Incremental manifest updates
-- Dependency cascade detection
+#### 1. **MCP Server Implementation**
+- PRISM as Model Context Protocol server
+- Tools: get_optimal_context, analyze_task
+- Integration with Claude Code MCP ecosystem
 
-#### 2. **Documentation Syncer**
-- Auto-update README sections
-- Changelog generation
-- API doc synchronization
+#### 2. **SQLite Intelligence Layer**
+- Manifest storage and indexing
+- Query optimization for context retrieval
+- Learning data persistence
 
-#### 3. **Context Router**
+#### 3. **Context Optimization Engine**
+- Ollama LLM integration for smart selection
 - Intent analysis from task descriptions
-- Predictive context loading
-- Multi-layer context strategy
+- Compression and relevance scoring
 
 #### 4. **PRISM Orchestrator**
-- Coordinate all components
-- Performance monitoring
-- Learning feedback loop
+- Coordinate all SIPOC components
+- Performance monitoring dashboard
+- Learning feedback loop implementation
 
 ---
 
 ## Technical Architecture
+
+### SIPOC Framework Architecture
+
+PRISM operates on a SIPOC (Supplier, Input, Process, Output, Customer) model:
+
+#### **System Architecture**
+```
+┌──────────────────────────────────────────────────────────┐
+│                    PRISM SIPOC MODEL                      │
+├──────────────────────────────────────────────────────────┤
+│ SUPPLIER  │ Claude Code hooks collecting data            │
+│           │ → Pre-agent hooks                            │
+│           │ → File change monitors                       │
+│           │ → Session lifecycle hooks                    │
+├──────────────────────────────────────────────────────────┤
+│ INPUT     │ Manifests stored in SQLite database         │
+│           │ → Code structure manifests                   │
+│           │ → Function registries                       │
+│           │ → Type definitions                          │
+│           │ → Dependency graphs                         │
+├──────────────────────────────────────────────────────────┤
+│ PROCESS   │ LLM-driven context engineering              │
+│           │ → Intent analysis via Ollama/MCP           │
+│           │ → Intelligent manifest selection            │
+│           │ → Quality-focused context assembly         │
+│           │ → Continuous learning and optimization     │
+├──────────────────────────────────────────────────────────┤
+│ OUTPUT    │ Optimally engineered context package        │
+│           │ → Agent-specific manifests                 │
+│           │ → Task-relevant context                    │
+│           │ → Quality-focused selection                │
+├──────────────────────────────────────────────────────────┤
+│ CUSTOMER  │ Claude Code Agents                         │
+│           │ → Specialist agents (frontend, backend)    │
+│           │ → General purpose agents                   │
+│           │ → Task-specific agents                     │
+└──────────────────────────────────────────────────────────┘
+```
+
+### Integration Methods
+
+#### **Option 1: MCP Server Approach (Recommended)**
+- PRISM runs as MCP server in `~/.claude-code/mcp/global.json`
+- Agents access context via MCP tools
+- No file movement or replacement needed
+- Clean separation of concerns
+
+```json
+// Example MCP configuration
+"prism": {
+  "type": "stdio",
+  "command": "python3",
+  "args": ["~/claude-automations/prism/src/prism_mcp_server.py"],
+  "env": {},
+  "disabled": false,
+  "autoApprove": ["get_optimal_context", "analyze_task"]
+}
+```
+
+#### **Option 2: Manifest Replacement (Fallback)**
+- Hook-based manifest replacement before agent execution
+- Direct file manipulation in `.claude/manifests/`
+- Immediate compatibility with existing agents
 
 ### System Components
 
@@ -162,15 +228,15 @@ PRISM creates "Context DNA" profiles for each agent type, learning from usage pa
 └──────────────┴─────────────┴──────────────┴────────────┘
 ```
 
-### Data Flow
+### Data Flow with MCP Integration
 
-1. **Agent Invocation** → Context DNA Loader (✅)
-2. **Profile Lookup** → Context DNA Profiler (✅)
-3. **Manifest Loading** → Pre-Agent Context Hook (✅)
-4. **Context Delivery** → Optimal Context Package (✅)
-5. **Usage Tracking** → Learning System (✅)
-6. **File Changes** → Manifest Updater (🔧)
-7. **Doc Updates** → Documentation Syncer (🔧)
+1. **Hook Collection** → Claude Code hooks gather manifest data
+2. **SQLite Storage** → Manifests stored in intelligent database
+3. **Agent Request** → Agent requests context via MCP tool
+4. **PRISM Processing** → Analyze intent, select manifests
+5. **Context Optimization** → Compress and optimize for agent
+6. **Delivery** → Return optimal context via MCP response
+7. **Learning** → Track usage, improve future selections
 
 ---
 
@@ -227,10 +293,11 @@ PRISM creates "Context DNA" profiles for each agent type, learning from usage pa
 ### Primary Metrics
 | Metric | Current | Target | Measurement |
 |--------|---------|---------|-------------|
-| Context Size | 200KB+ | <20KB | JSON size calculation |
-| Load Time | 2-3s | <0.5s | Timer measurement |
-| Relevance | ~10% | >95% | Usage tracking |
+| Context Relevance | ~10% | >95% | Agent task success rate |
+| Context Quality | Random | Optimized | LLM decision scoring |
+| Load Time | 2-3s | <1s | Timer measurement |
 | Freshness | Hours old | Real-time | Timestamp comparison |
+| Context Size | 200KB+ | Measured/Improving | Track for optimization trends |
 
 ### Secondary Metrics
 - Agent success rate improvement
@@ -328,7 +395,7 @@ Existing hooks providing:
 
 ## Conclusion
 
-PRISM represents a paradigm shift in context management for AI agents. By leveraging 80% existing infrastructure and adding intelligent orchestration, we can deliver 10x performance improvements with minimal development effort.
+PRISM represents a paradigm shift in context management for AI agents. By leveraging LLM-driven context engineering through MCP integration, we deliver precisely what agents need based on intelligent decision-making rather than arbitrary size constraints.
 
 The system's self-learning, self-maintaining nature ensures it gets better over time without manual intervention, making it a true "set and forget" solution for context optimization.
 
@@ -337,4 +404,5 @@ The system's self-learning, self-maintaining nature ensures it gets better over 
 ---
 
 *Document maintained by: PRISM Development Team*  
-*Last updated: August 24, 2025*
+*Last updated: August 25, 2025*  
+*Architecture: SIPOC-based with MCP integration*
