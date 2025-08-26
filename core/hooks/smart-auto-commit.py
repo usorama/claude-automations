@@ -14,9 +14,14 @@ from pathlib import Path
 import threading
 import hashlib
 
-# Add git-intelligence to path
+# Add git-intelligence and hook logger to path
 GIT_INTEL_PATH = Path.home() / 'claude-automations' / 'git-intelligence' / 'src'
+HOOKS_PATH = Path.home() / 'claude-automations' / 'core' / 'hooks'
 sys.path.insert(0, str(GIT_INTEL_PATH))
+sys.path.insert(0, str(HOOKS_PATH))
+
+# Import logger
+from hook_logger import HookLogger, logged_hook
 
 # Configuration
 CONFIG_FILE = Path.home() / '.claude' / 'smart-commit-config.json'
@@ -38,10 +43,12 @@ DEFAULT_CONFIG = {
 
 class SmartAutoCommit:
     def __init__(self):
+        self.logger = HookLogger('smart-auto-commit')
         self.config = self.load_config()
         self.state = self.load_state()
         self.last_commit_time = self.state.get('last_commit_time', datetime.now().isoformat())
         self.last_file_hashes = self.state.get('file_hashes', {})
+        self.logger.info("SmartAutoCommit initialized", config=self.config)
         
     def load_config(self):
         """Load configuration or create default"""
@@ -174,17 +181,23 @@ class SmartAutoCommit:
     
     def perform_commit(self, trigger_reason):
         """Perform the actual commit"""
-        if not self.get_repo_root():
+        repo_root = self.get_repo_root()
+        if not repo_root:
+            self.logger.warning("Not in a git repository")
             return False
         
         # Check if there are changes
         changed_files = self.get_changed_files()
         if not changed_files:
+            self.logger.info("No changes to commit")
             return False
+        
+        self.logger.info(f"Committing {len(changed_files)} files", repo=str(repo_root))
         
         try:
             # Stage all changes
             subprocess.run(['git', 'add', '-A'], check=True)
+            self.logger.info("Staged all changes")
             
             # Generate commit message
             message = self.generate_commit_message(trigger_reason)
@@ -194,6 +207,7 @@ class SmartAutoCommit:
                 ['git', 'commit', '-m', message],
                 capture_output=True, text=True
             )
+            self.logger.info(f"Commit attempt completed", message=message[:100])
             
             if result.returncode == 0:
                 # Update state
@@ -216,6 +230,7 @@ class SmartAutoCommit:
                 return True
             
         except Exception as e:
+            self.logger.error(e, "Auto-commit failed")
             if not self.config['silent_mode']:
                 print(f"⚠️ Auto-commit failed: {e}")
             return False
@@ -236,7 +251,10 @@ class SmartAutoCommit:
     def check_triggers(self):
         """Check all triggers and commit if needed"""
         if not self.config['enabled']:
+            self.logger.info("Auto-commit disabled in config")
             return
+        
+        self.logger.info("Checking triggers")
         
         # Priority order of triggers
         triggers = []
@@ -245,31 +263,45 @@ class SmartAutoCommit:
         operation = self.detect_operation_completion()
         if operation:
             triggers.append(operation)
+            self.logger.info(f"Operation trigger detected: {operation}")
         
         # 2. File threshold
         if self.should_commit_file_based():
             triggers.append('file_threshold')
+            changed = len(self.get_changed_files())
+            self.logger.info(f"File threshold trigger: {changed} files changed")
         
         # 3. Time interval (lowest priority)
         if self.should_commit_time_based():
             triggers.append('time_interval')
+            self.logger.info("Time interval trigger activated")
         
         # Commit if any trigger is active
         if triggers:
             trigger_reason = triggers[0]  # Use highest priority trigger
-            self.perform_commit(trigger_reason)
+            self.logger.info(f"Performing commit with trigger: {trigger_reason}")
+            success = self.perform_commit(trigger_reason)
+            if success:
+                self.logger.success(f"Auto-commit successful: {trigger_reason}")
+            else:
+                self.logger.warning(f"Auto-commit failed for trigger: {trigger_reason}")
+        else:
+            self.logger.info("No triggers activated")
     
     def run_continuous(self):
         """Run continuous monitoring"""
         check_interval = 60  # Check every minute
+        self.logger.info("Starting continuous monitoring", interval=check_interval)
         
         while True:
             try:
                 self.check_triggers()
                 time.sleep(check_interval)
             except KeyboardInterrupt:
+                self.logger.info("Monitoring stopped by user")
                 break
             except Exception as e:
+                self.logger.error(e, "Error during monitoring")
                 if not self.config['silent_mode']:
                     print(f"⚠️ Auto-commit error: {e}")
                 time.sleep(check_interval)
